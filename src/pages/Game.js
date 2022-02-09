@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { StyledCharacter, StyledGame, StyledScore, StyledTimer } from "../styled/Game";
 import { useNavigate } from "react-router-dom";
+import { useScore } from '../contexts/ScoreProvider';
 
 export default function Game() {
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useScore();
   const [seconds, setSeconds] = useState(0);
   const [character, setCurrentCharacter] = useState("");
   const [ms, setMs] = useState(0);
@@ -14,6 +15,7 @@ export default function Game() {
   useEffect(() => {
     const startDate = new Date();
     const interval = setInterval(() => updateTime(startDate), 1);
+    setScore(0);
 
     setRandomCharacter();
 
@@ -26,7 +28,7 @@ export default function Game() {
     document.addEventListener("keyup", keyupListener);
 
     return () => document.removeEventListener("keyup", keyupListener);
-  }, []);
+  }, [character, score]);
 
   useEffect(() => {
     if (seconds <= -1) {
@@ -35,7 +37,17 @@ export default function Game() {
   }, [seconds]);
 
   const keyupListener = (e) => {
-    console.log(e.key);
+
+    if (e.key === character) {
+      setScore(prevScore => prevScore + 1);
+    } else {
+      if (score > 0) {
+        setScore(prevScore => prevScore - 1);
+      }
+    }
+
+    setRandomCharacter();
+
   }
 
   const setRandomCharacter = () => {
