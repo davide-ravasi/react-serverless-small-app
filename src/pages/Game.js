@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { StyledCharacter, StyledGame, StyledScore, StyledTimer } from "../styled/Game";
 import { useNavigate } from "react-router-dom";
 import { useScore } from '../contexts/ScoreProvider';
@@ -11,6 +11,19 @@ export default function Game() {
   const MAX_SECONDS = 90;
   const navigate = useNavigate();
   const randomChar = "abcdefghijklmnopqrstuvxyz0123456789";
+  const keyupListener = useCallback((e) => {
+
+    if (e.key === character) {
+      setScore(prevScore => prevScore + 1);
+    } else {
+      if (score > 0) {
+        setScore(prevScore => prevScore - 1);
+      }
+    }
+
+    setRandomCharacter();
+
+  })
 
   useEffect(() => {
     const startDate = new Date();
@@ -35,20 +48,6 @@ export default function Game() {
       navigate('/gameOver');
     }
   }, [seconds, navigate]);
-
-  const keyupListener = (e) => {
-
-    if (e.key === character) {
-      setScore(prevScore => prevScore + 1);
-    } else {
-      if (score > 0) {
-        setScore(prevScore => prevScore - 1);
-      }
-    }
-
-    setRandomCharacter();
-
-  }
 
   const setRandomCharacter = () => {
     const randomInt = Math.floor(Math.random() * 35);
