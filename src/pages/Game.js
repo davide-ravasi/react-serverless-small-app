@@ -24,7 +24,7 @@ export default function Game() {
 
     setRandomCharacter();
 
-  }, [e]);
+  },[character, score, setScore])
 
   useEffect(() => {
     const startDate = new Date();
