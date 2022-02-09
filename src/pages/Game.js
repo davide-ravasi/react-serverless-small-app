@@ -11,6 +11,7 @@ export default function Game() {
   const MAX_SECONDS = 90;
   const navigate = useNavigate();
   const randomChar = "abcdefghijklmnopqrstuvxyz0123456789";
+
   const keyupListener = useCallback((e) => {
 
     if (e.key === character) {
@@ -23,7 +24,7 @@ export default function Game() {
 
     setRandomCharacter();
 
-  })
+  }, [e]);
 
   useEffect(() => {
     const startDate = new Date();
