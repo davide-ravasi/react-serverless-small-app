@@ -22,19 +22,19 @@ export default function Game() {
     return () => {
       clearInterval(interval);
     }
-  }, [])
+  }, [setScore])
 
   useEffect(() => {
     document.addEventListener("keyup", keyupListener);
 
     return () => document.removeEventListener("keyup", keyupListener);
-  }, [character, score]);
+  }, [character, score, keyupListener]);
 
   useEffect(() => {
     if (seconds <= -1) {
       navigate('/gameOver');
     }
-  }, [seconds]);
+  }, [seconds, navigate]);
 
   const keyupListener = (e) => {
 

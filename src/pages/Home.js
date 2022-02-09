@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import CTA from '../styled/CTA';
 import { Accent, StyledTitle } from '../styled/Navbar';
 
